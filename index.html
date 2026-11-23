@@ -416,6 +416,9 @@ function egCalc(appId, picked, dm, c){
   return {eg, det};
 }
 
+// つり輪の振動倒立技（グループⅠで2秒静止の倒立）
+function isSwingHs(e){ return e.app === "SR" && e.g === "I" && /倒立/.test(e.name) && /（[2２]秒）/.test(e.name); }
+
 function combos(arr, k, cb){
   const n = arr.length, idx = [];
   (function rec(start, depth){
@@ -456,7 +459,11 @@ function calc(appId, catId = state.cat){
   const k = c.count - (dm ? 1 : 0);
   const capOK = sel => { const cnt = {}; if(dm && appId === "FX") cnt[dm.gEff] = 1;
     for(const e of sel){ if(e.g === "a") continue; cnt[e.gEff] = (cnt[e.gEff] || 0) + 1; if(cnt[e.gEff] > 4) return false; } return true; };
-  const score = sel => sel.reduce((s, e) => s + e.val + (c.hs ? hsBonus(e, appId) : 0), 0) + egCalc(appId, sel, dm, c).eg - sel.reduce((s,e)=>s+e.idx,0)*1e-9;
+  // つり輪：振動倒立技（2秒）を数える技に入れないと ND 0.3（U-12 は要求なし）
+  const needSwingHs = appId === "SR" && catId !== "U12";
+  const hasSwingHs = sel => sel.some(e => isSwingHs(e));
+  const score = sel => sel.reduce((s, e) => s + e.val + (c.hs ? hsBonus(e, appId) : 0), 0) + egCalc(appId, sel, dm, c).eg
+    - (needSwingHs && !hasSwingHs(sel) ? .3 : 0) - sel.reduce((s,e)=>s+e.idx,0)*1e-9;
   let best = [];
   const sorted = [...cand].sort((a, b) => b.val - a.val || a.idx - b.idx);
   for(let m = Math.min(k, sorted.length); m >= 0; m--){
@@ -513,6 +520,10 @@ function calc(appId, catId = state.cat){
   if(appId === "FX" && items.length){
     if(c.fxDbl.where === "dismount"){ if(!(dm && isDouble(dm))) nd.push({v:c.fxDbl.nd, t:"終末技が2回（3回）宙返りではない"}); }
     else if(!items.some(it => ok(it) && isDouble(it))) nd.push({v:c.fxDbl.nd, t:"演技内に2回宙返り技がない"});
+  }
+  if(needSwingHs && items.length && !hasSwingHs(counted)){
+    const has = items.some(it => ok(it) && isSwingHs(it));
+    nd.push({v:.3, t: has ? "振動倒立技（2秒）が数える技に入っていない" : "振動倒立技（2秒）がない"});
   }
   if(catId === "U12" && U12_REQ[appId] && items.length){
     U12_REQ[appId].forEach((r, i) => { if(!(state.req[appId] || [])[i]) nd.push({v:.3, t:`特別要求「${r}」がない`}); });
@@ -613,6 +624,9 @@ function rulesHtml(){
     <p class="muted">E審判の減点は、最も高い減点と最も低い減点を除いた平均を10.00から引きます。</p>`});
   sec.push({t:"ND（決定点から引かれる減点）", h:`
     <h3>技数不足</h3><table><tr><th>数えられた技</th><th class="num">ND</th></tr>${shortRows}</table>
+    <h3>つり輪</h3><ul>
+      <li>${id === "U12" ? "U-12は振動倒立静止を要求しない（なくてもNDなし）。" : "<b>振動倒立技（2秒静止）</b>を1つ行い、数える技に入れる。ないとND 0.3。"}</li>
+    </ul>
     <h3>ゆか</h3><ul>
       <li>${c.fxDbl.where === "dismount" ? `2回（3回）宙返り技は<b>終末技</b>で行う。行わないとND ${f1(c.fxDbl.nd)}。` : `<b>演技の中で</b>2回宙返り技を行う。行わない・不認定はND 0.1。`}</li>
       <li>演技時間は最大70秒。フロアの外に出るとライン減点（0.1〜0.3）。</li>
@@ -624,7 +638,7 @@ function rulesHtml(){
     <ul>
       <li><b>ゆか</b>：12m×12m、最大70秒。グループはⅠ跳躍技以外・Ⅱ前方系・Ⅲ後方系・Ⅳひねりを伴う1回宙返り。力技・旋回系はそれぞれ1技まで価値が認められる。</li>
       <li><b>あん馬</b>：止まらずに旋回・交差を続ける。ロシアン転向技は終末技を含めて最大2回まで。</li>
-      <li><b>つり輪</b>：振動技と力静止技（2秒静止）の組合せ。</li>
+      <li><b>つり輪</b>：振動技と力静止技（2秒静止）の組合せ。振動倒立技（2秒）が必要（U-12を除く）。</li>
       <li><b>跳馬</b>：1本の跳越の価値点がDスコア。</li>
       <li><b>平行棒</b>：支持・懸垂・振動技。ギャッツン系はとび動作が3/4ひねりに満たないと1つ低い難度（ニュースレター）。</li>
       <li><b>鉄棒</b>：トカチェフ系・コバチ系など同系の手放し技は最大2回まで。アドラー系も最大2回まで。</li>
