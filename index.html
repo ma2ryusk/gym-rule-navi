@@ -5,32 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>男子体操ルールナビ</title>
 <meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#1a2b52">
 <style>
 :root{
-  --bg:#f4f6fa; --card:#fff; --ink:#1d2433; --sub:#5b6577; --line:#e1e5ee;
-  --pri:#1f5fbf; --pri-2:#e8f0fc; --ok:#1d8a5b; --ok-2:#e5f5ee; --warn:#b26a00; --warn-2:#fff4e0; --ng:#c23b3b; --ng-2:#fdeaea;
+  --bg:#f5f6f9; --card:#fff; --ink:#17213a; --sub:#5b6577; --line:#e0e4ec;
+  --pri:#1a2b52; --pri-2:#e9edf5; --acc:#f07c1a; --acc-d:#c85f08; --acc-2:#fff1e3; --ok:#1d8a5b; --ok-2:#e5f5ee; --warn:#b26a00; --warn-2:#fff4e0; --ng:#c23b3b; --ng-2:#fdeaea;
   --r:12px;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Yu Gothic UI","Meiryo",system-ui,sans-serif;font-size:15px;line-height:1.6}
 button,select,input{font:inherit;color:inherit}
-header{background:var(--pri);color:#fff;padding:12px 16px 0;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+header{background:var(--pri);color:#fff;padding:12px 16px 0;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.15);border-bottom:3px solid var(--acc)}
 .hrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;max-width:1100px;margin:0 auto}
 header h1{font-size:18px;margin:0;flex:1;white-space:nowrap}
 header label{font-size:13px;opacity:.95}
 header select{border:0;border-radius:8px;padding:6px 10px;color:var(--ink);font-weight:600}
 nav{display:flex;gap:4px;max-width:1100px;margin:10px auto 0}
-nav button{flex:1;border:0;background:rgba(255,255,255,.15);color:#fff;padding:8px 4px;border-radius:8px 8px 0 0;cursor:pointer;font-weight:600}
-nav button.on{background:var(--bg);color:var(--pri)}
+nav button{flex:1;border:0;border-top:3px solid transparent;background:rgba(255,255,255,.12);color:#fff;padding:7px 4px 8px;border-radius:8px 8px 0 0;cursor:pointer;font-weight:600}
+nav button:hover{background:rgba(255,255,255,.2)}
+nav button.on{background:var(--acc);border-top-color:#ffb36b;color:#fff}
 main{max-width:1100px;margin:0 auto;padding:16px}
-.notice{background:var(--pri-2);color:#24467d;border:1px solid #c9daf5;border-radius:var(--r);padding:10px 14px;font-size:13px;margin-bottom:14px}
+.notice{background:var(--acc-2);color:#6b3a0a;border:1px solid #f8d3b0;border-left:4px solid var(--acc);border-radius:var(--r);padding:10px 14px;font-size:13px;margin-bottom:14px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px}
 .card h2{font-size:17px;margin:0 0 8px}
 .card h3,details h3{font-size:15px;margin:14px 0 6px}
 .muted{color:var(--sub);font-size:13px}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
 .chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer;font-size:14px}
-.chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
 .btn{border:1px solid var(--pri);background:var(--pri);color:#fff;border-radius:8px;padding:7px 14px;cursor:pointer;font-weight:600}
 .btn.ghost{background:#fff;color:var(--pri)}
 .btn.small{padding:3px 10px;font-size:13px}
@@ -44,11 +46,11 @@ input[type=text],input[type=search],select.f{width:100%;border:1px solid var(--l
 
 details{border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:#fff}
 details summary{cursor:pointer;padding:12px 14px;font-weight:600;list-style:none}
-details summary::before{content:"▶";display:inline-block;margin-right:8px;font-size:11px;transition:.2s;color:var(--pri)}
+details summary::before{content:"▶";display:inline-block;margin-right:8px;font-size:11px;transition:.2s;color:var(--acc)}
 details[open] summary::before{transform:rotate(90deg)}
 details .body{padding:0 16px 14px}
 details .body ul{padding-left:20px;margin:6px 0}
-.formula{background:var(--pri-2);border-radius:10px;padding:12px;text-align:center;font-weight:700;font-size:17px;margin:8px 0}
+.formula{background:var(--acc-2);color:var(--pri);border:1px solid #f8d3b0;border-radius:10px;padding:12px;text-align:center;font-weight:700;font-size:17px;margin:8px 0}
 .tag{display:inline-block;font-size:11px;border-radius:6px;padding:1px 7px;background:var(--pri-2);color:var(--pri);font-weight:600;margin-left:4px;white-space:nowrap}
 .tag.ng{background:var(--ng-2);color:var(--ng)}
 .tag.hs{background:#fff1e0;color:#a85a00}
@@ -70,7 +72,7 @@ details .body ul{padding-left:20px;margin:6px 0}
 .app{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer}
 .app .n{font-weight:700;font-size:14px}
 .app .d{font-size:18px;font-weight:800;color:var(--pri)}
-.app.on{border-color:var(--pri);box-shadow:0 0 0 2px var(--pri) inset;background:var(--pri-2)}
+.app.on{border-color:var(--acc);box-shadow:0 0 0 2px var(--acc) inset;background:var(--acc-2)}
 table{width:100%;border-collapse:collapse}
 th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;font-size:14px;vertical-align:middle}
 th{font-size:12px;color:var(--sub);font-weight:600}
@@ -97,8 +99,9 @@ tr.nocount .diff{opacity:.4}
 .sum > div{background:var(--bg);border-radius:10px;padding:10px;text-align:center}
 .sum .k{font-size:12px;color:var(--sub)}
 .sum .v{font-size:20px;font-weight:800}
-.sum .total{background:var(--pri);color:#fff}
-.sum .total .k{color:#dbe6fa}
+.sum .total{background:var(--pri);color:#fff;box-shadow:inset 0 -3px 0 var(--acc)}
+.sum .total .k{color:#c9d2e6}
+.sum .total .v{color:#ffa552}
 .explain{background:var(--ok-2);border-radius:10px;padding:10px 14px;margin-top:12px;font-size:14px}
 .explain.warn{background:var(--warn-2);color:#6b4300}
 .explain.ng{background:var(--ng-2);color:#8a1f1f}
@@ -106,33 +109,34 @@ tr.nocount .diff{opacity:.4}
 .picker{display:flex;gap:8px;margin-top:10px}
 .picker select{flex:1;min-width:0}
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-.grand{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--pri);color:#fff;border-radius:var(--r);padding:12px 16px;margin-bottom:12px}
-.grand .v{font-size:26px;font-weight:800}
+.grand{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:var(--pri);color:#fff;border-radius:var(--r);padding:12px 16px;margin-bottom:12px;border-left:6px solid var(--acc)}
+.grand .v{font-size:26px;font-weight:800;color:#ffa552}
+.credit{max-width:1100px;margin:0 auto;padding:4px 16px 18px;text-align:right;font-size:10px;color:#a2a9b6;letter-spacing:.05em}
 .opts{display:flex;flex-direction:column;gap:6px;margin-top:12px;padding:10px 12px;border:1px dashed var(--line);border-radius:10px}
 
 #pdfArea{position:fixed;left:-10000px;top:0}
 .sheet{width:794px;height:1123px;overflow:hidden;background:#fff;color:#111;padding:32px 34px;font-family:"Hiragino Sans","Yu Gothic","Meiryo",sans-serif;line-height:1.35}
 .sheet .inner{font-size:12px}
-.sheet .ttl{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #1f5fbf;padding-bottom:4px;margin-bottom:8px}
+.sheet .ttl{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid #f07c1a;padding-bottom:4px;margin-bottom:8px}
 .sheet h1{font-size:2em;margin:0;line-height:1.1}
 .sheet .meta{color:#555}
 .sheet table{width:100%;border-collapse:collapse}
 .sheet th,.sheet td{font-size:1em;border:1px solid #c5cdd9;padding:.3em .45em;vertical-align:middle}
-.sheet th{background:#eef3fb;color:#333;font-weight:700;white-space:nowrap}
+.sheet th{background:#e9edf5;color:#333;font-weight:700;white-space:nowrap}
 .sheet .info th{width:5em}
 .sheet .dsum{margin:8px 0 10px;table-layout:fixed}
 .sheet .dsum td{text-align:center;padding:.35em .2em}
 .sheet .dsum .k{font-size:.92em;color:#555}
 .sheet .dsum .v{font-size:1.45em;font-weight:800}
-.sheet .dsum .tot{background:#1f5fbf;color:#fff}
-.sheet .dsum .tot .k{color:#dbe6fa}
+.sheet .dsum .tot{background:#1a2b52;color:#fff}
+.sheet .dsum .tot .k{color:#c9d2e6}
 .sheet .boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.sheet .box{border:1.5px solid #1f5fbf;border-radius:6px;overflow:hidden}
-.sheet .bh{display:flex;justify-content:space-between;background:#1f5fbf;color:#fff;font-weight:800;font-size:1.15em;padding:.25em .6em}
+.sheet .box{border:1.5px solid #1a2b52;border-radius:6px;overflow:hidden}
+.sheet .bh{display:flex;justify-content:space-between;background:#1a2b52;color:#fff;font-weight:800;font-size:1.15em;padding:.25em .6em}
 .sheet .box table th,.sheet .box table td{border-left:0;border-right:0}
 .sheet .c{text-align:center}.sheet .r{text-align:right}
 .sheet .gray{color:#9aa}
-.sheet .cn{color:#1f5fbf}
+.sheet .cn{color:#1a2b52}
 .sheet .bd{text-align:right;padding:.3em .6em;color:#333;font-size:.95em}
 .sheet .sh{padding:0 .6em .35em;color:#b26a00;font-size:.92em}
 .sheet .foot{font-size:.85em;color:#777;margin-top:10px}
@@ -190,6 +194,7 @@ tr.nocount .diff{opacity:.4}
   </section>
 
 </main>
+<footer class="credit">鯖江高校体操部作成</footer>
 
 <div id="pdfArea"></div>
 
