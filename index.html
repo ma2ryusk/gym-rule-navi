@@ -681,7 +681,7 @@ function rulesHtml(){
    ========================================================= */
 function renderHeader(){
   $("#catSel").innerHTML = CAT_ORDER.map(k => `<option value="${k}" ${k === state.cat ? "selected" : ""}>${CATS[k].name}</option>`).join("");
-  $("#catNotice").innerHTML = `📘 このツールは採点規則などの資料をもとに作成した参考用のものです。ルール・技名・難度には誤りがある可能性があります。必ず採点規則の原本で確認してください。`;
+  $("#catNotice").innerHTML = `📘 本ツールはテスト版であり、採点規則等の資料をもとに作成した参考用です。ルール・技名・難度等に誤りがある可能性があるため、必ず採点規則の原本でご確認ください。`;
   if(!["rules","search","routine"].includes(state.tab)) state.tab = state.tab === "team" ? "routine" : "rules";
   document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === state.tab));
   ["rules","search","routine"].forEach(t => $("#tab-" + t).classList.toggle("hidden", t !== state.tab));
